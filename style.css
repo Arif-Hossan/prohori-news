@@ -4,11 +4,14 @@ a:active{
 .nav-horizontal{
     margin-top: -20px;
 }
+a:hover{
+    cursor: pointer;
+}
 .navbar-items a:hover{
     text-decoration: underline;
     text-decoration-color:#5D5FEF;
     text-underline-offset: 10px;
-    cursor: pointer;
+
 }
 .cagetory {
     display: flex;

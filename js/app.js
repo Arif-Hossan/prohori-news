@@ -4,6 +4,7 @@ const loadCategories = async () => {
   const data = await res.json();
   displayCategories(data.data.news_category);
 };
+
 // display categories
 const displayCategories = (categories) => {
   const categoriesContainer = document.getElementById("categories");
@@ -11,10 +12,10 @@ const displayCategories = (categories) => {
     const categoryItem = document.createElement("li");
     categoryItem.classList.add("navbar-items", "me-2", "mb-2");
     categoryItem.innerHTML = `<a class="nav-link" onclick="loadCategoryNews('${category.category_id}')">${category.category_name}</a>`;
-
     categoriesContainer.appendChild(categoryItem);
   });
 };
+
 // load news by categories
 const loadCategoryNews = async (id) => {
   const url = `https://openapi.programming-hero.com/api/news/category/${id}`;
@@ -22,10 +23,23 @@ const loadCategoryNews = async (id) => {
   const data = await res.json();
   displayCategoryNews(data.data);
 };
+
 // display category wise news
 const displayCategoryNews = (categoryNews) => {
+  // console.log(categoryNews);
   const newsContainer = document.getElementById("news-container");
   newsContainer.textContent = ``;
+
+  //  categoryNews length
+  const categoryId = categoryNews[0].category_id;
+  const categoryName = getCategoryName(categoryId);
+  console.log(categoryName);
+  const totalCategoryNews= categoryNews.length;
+  const categoryDetailsDiv=document.getElementById('category-details');
+  categoryDetailsDiv.classList.remove('d-none');
+  categoryDetailsDiv.innerHTML=
+  `<p>${totalCategoryNews} items found for category</p>`;
+  // console.log(totalCategoryNews);
   // short array short wise
   categoryNews.sort(function (a, b) {
     return b.total_view - a.total_view;
@@ -63,25 +77,26 @@ const displayCategoryNews = (categoryNews) => {
             }" class="rounded-circle me-2" style="height:70px";>
             <div class="author-details">
                 <p>${news.author.name ? news.author.name : "Unknown"}</p>
-                <p class="text-muted">${news.author.published_date.slice(
-                  0,
-                  10
-                )}</p>
+                <p class="text-muted">${news.author.published_date.slice(0,10)}</p>
             </div>
         </div>
-      <!--Total View -->
+        <!--Total View -->
            <div class="d-flex justify-content-center align-items-center">
-           <strong><i class="fa-regular fa-eye"></i></strong>
-           <span>${news.total_view}</span>
+           <strong><i class="fa-regular fa-eye me-1"></i></strong>
+              <span>${news.total_view?news.total_view:"Not Found"}</span>
            </div>
-      <!--Rating -->
-         <div>
+        <!--Rating -->
+         <div class="d-flex justify-content-center align-items-center">
             <div class="stars-outer">
               <div class="stars-inner">
               </div>
             </div>
          </div>
+        <!--More view link -->
+          <div class="d-flex justify-content-center align-items-center mt-2">
+                <a data-bs-toggle="modal" data-bs-target="#newsModal"><i class="fa-solid fa-arrow-right"></i></a>
 
+          </div>
        <div>
        </div>
       </div>
@@ -96,4 +111,18 @@ const displayCategoryNews = (categoryNews) => {
     starsInner.style.width = starPercentageRounded;
   });
 };
+
+// get category name
+const getCategoryName =async id =>{
+  const url =`https://openapi.programming-hero.com/api/news/categories`;
+  const res = await fetch(url);
+  const data = await res.json();
+  id= id - 1;
+  const categoryName = data.data.news_category[id].category_name;
+  console.log(categoryName);
+  return categoryName;
+
+}
+
 loadCategories();
+

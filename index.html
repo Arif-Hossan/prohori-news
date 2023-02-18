@@ -44,8 +44,8 @@
             </ul>
           </div>
          <!-- category count -->
-         <div class="alert alert-light" role="alert">
-          4 items found for category Entertainment
+         <div id="category-details" class="d-none alert alert-light" role="alert">
+          <p></p>
         </div>
     </header>
 
@@ -54,12 +54,34 @@
       <div id="news-container">
 
       </div>
-    <!-- Footer -->
-<div style="margin-top:80px">
-  <footer class="bg-white fixed-bottom">
-    <p class="text-center p-2"><strong>Prohori News &copy; 2023 </strong></p>
-  </footer>
+    <!--Individual News modal -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="newsModal" tabindex="-1" aria-labelledby="newsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newsModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
+    <!-- Footer -->
+    <div style="margin-top:80px">
+      <footer class="bg-white fixed-bottom">
+        <p class="text-center p-2"><strong>Prohori News &copy; 2023 </strong></p>
+      </footer>
+    </div>
 
     </main>
 
