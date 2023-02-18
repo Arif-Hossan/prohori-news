@@ -10,7 +10,7 @@ const displayCategories = (categories) => {
   const categoriesContainer = document.getElementById("categories");
   categories.forEach((category) => {
     const categoryItem = document.createElement("li");
-    categoryItem.classList.add("navbar-items", "me-2", "mb-2");
+    categoryItem.classList.add("navbar-items", "me-5", "mb-2");
     categoryItem.innerHTML = `<a class="nav-link" onclick="loadCategoryNews('${category.category_id}')">${category.category_name}</a>`;
     categoriesContainer.appendChild(categoryItem);
   });
@@ -68,8 +68,9 @@ const displayCategoryNews = (categoryNews) => {
         <p class="card-text">${news.details.slice(0, 320)}...</p>
 
 
-      <div class="d-flex mt-5 justify-content-between">
-       <!--Author -->
+    <div class="row row-cols-2 row-cols-md-4" style="margin-top:80px; margin-bottom:0;">
+      <div class="col">
+        <!--Author -->
         <div class="author d-flex">
             <img src="${
               news.author.img
@@ -83,30 +84,40 @@ const displayCategoryNews = (categoryNews) => {
                 }</p>
             </div>
         </div>
-        <!--Total View -->
-           <div class="d-flex justify-content-center align-items-center">
-           <strong><i class="fa-regular fa-eye me-1"></i></strong>
-              <span>${news.total_view ? news.total_view : "Not Found"}</span>
-           </div>
-        <!--Rating -->
-         <div class="d-flex justify-content-center align-items-center">
-            <div class="stars-outer">
-              <div class="stars-inner">
-              </div>
-            </div>
-         </div>
-        <!--More view link -->
-          <div class="d-flex justify-content-center align-items-center mt-2">
-                <a onclick="loadNewsDetails('${
-                  news._id
-                }')" data-bs-toggle="modal" data-bs-target="#newsModal"><i class="fa-solid fa-arrow-right"></i></a>
-
-          </div>
-       <div>
-       </div>
       </div>
-    </div>
-   </div>`;
+
+      <div class="col">
+        <!--Total View -->
+        <div class="d-flex justify-content-center align-items-center">
+        <strong><i class="fa-regular fa-eye me-1"></i></strong>
+           <span>${news.total_view ? news.total_view : "Not Found"}</span>
+        </div>
+
+      </div>
+      <div class="col">
+          <!--Rating -->
+          <div class="d-flex justify-content-center align-items-center">
+            <div class="stars-outer">
+                <div class="stars-inner">
+                </div>
+            </div>
+          </div>
+      </div>
+      <div class="col">
+        <!--More view link -->
+        <div class="d-flex justify-content-center align-items-center mt-2">
+          <a
+          onclick="loadNewsDetails('${news._id}')"
+          data-bs-toggle="modal"
+          data-bs-target="#newsModal">
+          <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+</div>
+</div>
+</div>
+</div>`;
     //  append the news div to the news container
     newsContainer.appendChild(newsDiv);
     // Find the stars-inner element in the news div
