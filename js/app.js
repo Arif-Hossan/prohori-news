@@ -33,12 +33,11 @@ const displayCategoryNews = (categoryNews) => {
   //  categoryNews length
   const categoryId = categoryNews[0].category_id;
   const categoryName = getCategoryName(categoryId);
-  console.log(categoryName);
-  const totalCategoryNews= categoryNews.length;
-  const categoryDetailsDiv=document.getElementById('category-details');
-  categoryDetailsDiv.classList.remove('d-none');
-  categoryDetailsDiv.innerHTML=
-  `<p>${totalCategoryNews} items found for category</p>`;
+  // console.log(categoryName);
+  const totalCategoryNews = categoryNews.length;
+  const categoryDetailsDiv = document.getElementById("category-details");
+  categoryDetailsDiv.classList.remove("d-none");
+  categoryDetailsDiv.innerHTML = `<p>${totalCategoryNews} items found for category</p>`;
   // console.log(totalCategoryNews);
   // short array short wise
   categoryNews.sort(function (a, b) {
@@ -68,22 +67,26 @@ const displayCategoryNews = (categoryNews) => {
         <h5 class="card-title">${news.title}</h5>
         <p class="card-text">${news.details.slice(0, 320)}...</p>
 
-      </div>
+
       <div class="d-flex mt-5 justify-content-between">
-      <!--Author -->
+       <!--Author -->
         <div class="author d-flex">
             <img src="${
               news.author.img
             }" class="rounded-circle me-2" style="height:70px";>
             <div class="author-details">
                 <p>${news.author.name ? news.author.name : "Unknown"}</p>
-                <p class="text-muted">${news.author.published_date.slice(0,10)}</p>
+                <p class="text-muted">${
+                  news.author.published_date
+                    ? news.author.published_date.slice(0, 10)
+                    : "No Data"
+                }</p>
             </div>
         </div>
         <!--Total View -->
            <div class="d-flex justify-content-center align-items-center">
            <strong><i class="fa-regular fa-eye me-1"></i></strong>
-              <span>${news.total_view?news.total_view:"Not Found"}</span>
+              <span>${news.total_view ? news.total_view : "Not Found"}</span>
            </div>
         <!--Rating -->
          <div class="d-flex justify-content-center align-items-center">
@@ -94,7 +97,9 @@ const displayCategoryNews = (categoryNews) => {
          </div>
         <!--More view link -->
           <div class="d-flex justify-content-center align-items-center mt-2">
-                <a data-bs-toggle="modal" data-bs-target="#newsModal"><i class="fa-solid fa-arrow-right"></i></a>
+                <a onclick="loadNewsDetails('${
+                  news._id
+                }')" data-bs-toggle="modal" data-bs-target="#newsModal"><i class="fa-solid fa-arrow-right"></i></a>
 
           </div>
        <div>
@@ -113,16 +118,56 @@ const displayCategoryNews = (categoryNews) => {
 };
 
 // get category name
-const getCategoryName =async id =>{
-  const url =`https://openapi.programming-hero.com/api/news/categories`;
+const getCategoryName = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/news/categories`;
   const res = await fetch(url);
   const data = await res.json();
-  id= id - 1;
+  id = id - 1;
   const categoryName = data.data.news_category[id].category_name;
-  console.log(categoryName);
+  // console.log(categoryName);
   return categoryName;
+};
 
-}
+// loading news details
+const loadNewsDetails = async (newsId) => {
+  const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  displayNewsDetails(data.data[0]);
+};
+
+// display the news details in modal
+const displayNewsDetails = (news) => {
+  console.log(news);
+  const modalTitle = document.getElementById("newsModalLabel");
+  modalTitle.innerText = `${news.title}`;
+  const newsBody = document.getElementById("news-modal-body");
+  newsBody.innerHTML = `
+<img src="${news.image_url}" class="img-fluid rounded-start p-3 ">
+<p class="card-text">${news.details}</p>
+<div class="d-flex mt-5 justify-content-around">
+       <!--Author -->
+        <div class="author d-flex">
+            <img src="${
+              news.author.img
+            }" class="rounded-circle me-2" style="height:70px";>
+            <div class="author-details">
+                <p>${news.author.name ? news.author.name : "Unknown"}</p>
+                <p class="text-muted">${
+                  news.author.published_date
+                    ? news.author.published_date.slice(0, 10)
+                    : "No Data"
+                }</p>
+            </div>
+        </div>
+        <!--Total View -->
+           <div class="d-flex justify-content-center align-items-center">
+           <strong><i class="fa-regular fa-eye me-1"></i></strong>
+              <span>${news.total_view ? news.total_view : "Not Found"}</span>
+           </div>
+
+       </div>`;
+};
 
 loadCategories();
-
+loadCategoryNews("08");
