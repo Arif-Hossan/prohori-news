@@ -21,6 +21,9 @@ a:hover{
 .category li a{
     text-decoration: none;
 }
+/* button color */
+
+
 /* Rating */
 .stars-outer{
     position: relative;

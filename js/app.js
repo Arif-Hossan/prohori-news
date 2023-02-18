@@ -114,8 +114,8 @@ const displayCategoryNews = (categoryNews) => {
           </a>
         </div>
       </div>
-</div>
-</div>
+    </div>
+  </div>
 </div>
 </div>`;
     //  append the news div to the news container

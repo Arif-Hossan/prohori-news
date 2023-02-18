@@ -45,13 +45,28 @@
               </ul>
             </div>
           </div>
-         <!-- category count -->
-         <div id="category-details" class="d-none alert alert-light" role="alert">
-          <p></p>
-        </div>
-    </header>
+ </header>
+ <main>
+      <!-- category count -->
+      <div id="category-details" class="d-none alert alert-light" role="alert">
+        <p></p>
+      </div>
+    <!-- filter -->
+     <div class="d-flex justify-content-between mb-3">
+       <div class="d-flex align-items-center">
+          <h6 class="me-2">Short by view</h6>
+          <select class="form-select w-50" aria-label="Default select example">
+            <option selected>Default</option>
+            <option value="1">Lowest to Highest</option>
+            <option value="2">Highest to Lowest</option>
+          </select>
+       </div>
 
-    <main>
+       <div>
+       <button class="btn btn-light me-2">Today's Pick</button>
+       <button class="btn btn-light">Trending</button>
+       </div>
+     </div>
       <!-- news section -->
       <div id="news-container">
 
